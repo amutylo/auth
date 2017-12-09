@@ -8,9 +8,11 @@ class LoginForm extends Component{
 
   onButtonPress(){  
     const { email, password } = this.state;
-  
+    this.setState({error: ''});
+
     firebase.auth().signInWithEmailAndPassword(email, password)
-    .catch(() => {
+    .catch((error) => {
+      console.log('error', error.message)
       firebase.auth().createUserWithEmailAndPassword(email, password)
       .catch(() => {
         this.setState({error: 'Authentication fail.'})
@@ -23,19 +25,19 @@ class LoginForm extends Component{
       <Card>
         <CardSection>
           <Input 
-            placeholder='user@email.com'
-            label='Email'
-            value={this.state.password}
-            onChangeText={password => this.setState({password})} 
+            placeholder="user@gmail.com"
+            label="Email"
+            value={this.state.email}
+            onChangeText={email => this.setState({ email })}
           />
         </CardSection>
         <CardSection>
           <Input 
             secureTextEntry
-            placeholder='password'
-            label='Password'
-            value={this.state.email}
-            onChangeText={email => this.setState({email})} 
+            placeholder="password"
+            label="Password"
+            value={this.state.password}
+            onChangeText={password => this.setState({ password })}
           />
         </CardSection>
         <Text style={styles.errorTextStyle}>
